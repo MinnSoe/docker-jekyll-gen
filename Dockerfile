@@ -17,5 +17,11 @@ RUN apt-get update &&\
 	apt-get install -y \
 		python-pygments \
 		nodejs \
-		default-jre &&\
+		default-jre && \
 	npm install -g npm
+
+
+#####################################################################
+## Expose Default Port for Built-In Server
+#####################################################################
+EXPOSE 4000
