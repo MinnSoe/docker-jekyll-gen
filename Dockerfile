@@ -1,27 +1,38 @@
-FROM ruby:2.1.4-onbuild
+FROM ruby:2.2
 MAINTAINER Minn Soe <contributions@minn.so>
 
-## onbuild tag will grab local Gemfile and will bring in Jekyll.
+
+#####################################################################
+## Add Nodesource repository
+#####################################################################
+RUN curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
 
 
 #####################################################################
-## Inject Nodesource Repository
-#####################################################################
-RUN curl -sL https://deb.nodesource.com/setup | bash -
-
-
-#####################################################################
-## Update OS and Install/Update Utilities
+## Update OS and install/update utilities
 #####################################################################
 RUN apt-get update &&\
 	apt-get install -y \
 		python-pygments \
 		nodejs \
+		build-essential \
 		default-jre && \
 	npm install -g npm
 
 
 #####################################################################
-## Expose Default Port for Built-In Server
+## Install ruby dependencies
 #####################################################################
-EXPOSE 4000
+
+RUN bundle config --global frozen 1
+
+RUN mkdir -p /usr/install
+RUN mkdir -p /usr/deploy
+
+WORKDIR /usr/install
+
+COPY Gemfile /usr/install/
+COPY Gemfile.lock /usr/install/
+RUN bundle install
+
+WORKDIR /usr/deploy
