@@ -1,9 +1,10 @@
-docker-jekyll-gen
+[docker-jekyll-gen][dh]
 =================
 A Docker container with Jekyll and s3_website for faster continuous delivery.
 This container is used for generating and publishing Jekyll powered static
 sites as part of a GitLab CI pipeline. This docker container should be specified
-when configuring your GitLab CI runner.
+when configuring your GitLab CI runner. You can use this container by creating
+a docker runner using `minn/jekyll-gen` from the Docker Hub.
 
 The commands `jekyll`, `s3_website`, and `bundle` are available. If additional
 plugins are required please run `bundle install` with your own Gemfile. Use
@@ -17,3 +18,5 @@ Packages Included:
 * nodeJS (latest)
 * openJDK
 * pygments
+
+[dh]: https://hub.docker.com/r/minn/jekyll-gen/
