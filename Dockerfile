@@ -13,11 +13,21 @@ RUN curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
 #####################################################################
 RUN apt-get update &&\
 	apt-get install -y \
+		locales \
 		python-pygments \
 		nodejs \
 		build-essential \
 		default-jre && \
 	npm install -g npm
+
+
+#####################################################################
+## Set locale to en_US.UTF-8
+######################################################################
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 
 #####################################################################
