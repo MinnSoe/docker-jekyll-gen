@@ -1,43 +1,29 @@
-FROM ruby:2.2
-MAINTAINER Minn Soe <contributions@minn.so>
+FROM frolvlad/alpine-oraclejdk8:slim
+MAINTAINER Minn Soe <contributions@minn.io>
 
-
-#####################################################################
-## Add Nodesource repository
-#####################################################################
-RUN curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
-
-
-#####################################################################
-## Update OS and install/update utilities
-#####################################################################
-RUN apt-get update &&\
-	apt-get install -y \
-		locales \
-		python-pygments \
-		nodejs \
-		build-essential \
-		default-jre && \
-	npm install -g npm
-
+ENV LANG C.UTF-8
+ENV BUILD_PACKAGES \
+	bash curl-dev ruby-dev build-base nodejs libffi-dev libxml2 libxslt \
+	libxslt-dev libxml2-dev zlib-dev zlib
+ENV RUBY_PACKAGES ruby ruby-io-console ruby-bundler ruby-rdoc ruby-irb
 
 #####################################################################
-## Set locale to en_US.UTF-8
-######################################################################
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+## Install packages
+#####################################################################
+RUN apk update && \
+		apk upgrade && \
+		apk add $BUILD_PACKAGES && \
+    apk add $RUBY_PACKAGES && \
+    rm -rf /var/cache/apk/* && \
+		gem install bundler
 
 
 #####################################################################
 ## Install ruby dependencies
 #####################################################################
-
 RUN bundle config --global frozen 1
 
-RUN mkdir -p /usr/install
-RUN mkdir -p /usr/deploy
+RUN mkdir -p /usr/install && mkdir -p /usr/deploy
 
 WORKDIR /usr/install
 
