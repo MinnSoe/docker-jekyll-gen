@@ -7,4 +7,5 @@ ENV LANG C.UTF-8
 ## Install packages
 #####################################################################
 RUN npm update && \
-		npm install -g gulp phantomjs-prebuilt
+		npm install -g gulp phantomjs-prebuilt && \
+		apt-get update && apt-get install nasm
