@@ -8,4 +8,4 @@ ENV LANG C.UTF-8
 #####################################################################
 RUN npm update && \
 		npm install -g gulp phantomjs-prebuilt && \
-		apt-get update && apt-get install nasm
+		apt-get update && apt-get install -y nasm zlib1g-dev optipng
