@@ -38,4 +38,4 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 RUN npm update \
 	&& npm install -g gulp phantomjs-prebuilt \
 	&& apt-get update \
-	&& apt-get install -y nasm
+	&& apt-get install -y nasm openjdk-7-jre
